@@ -1,4 +1,4 @@
-Copy# EstateChain
+## EstateChain
 
 EstateChain: Revolutionizing real estate investments through blockchain-powered fractional ownership and global accessibility.
 
