@@ -1,64 +1,52 @@
-// components/WalletConnect.tsx
+'use client';
 
-import React from 'react';
-import { Button } from './ui/button';
+import React, { useState, useEffect } from 'react';
+import { initKit, setPublicKey } from '../utils/stellar-wallets-kit';
 
+const ConnectWallet: React.FC = () => {
+  const [connectedKey, setConnectedKey] = useState<string | null>(null);
+  const [kit, setKit] = useState<any>(null);
 
-const WalletConnect: React.FC = () => {
-  const { isConnected, publicKey, connectWallet, disconnectWallet } = useWallet();
-  const { toast } = useToast();
+  useEffect(() => {
+    initKit().then(setKit);
+  }, []);
 
-  const handleConnectWallet = async () => {
+  const handleConnect = async () => {
+    if (!kit) return;
     try {
-      await connectWallet();
-      toast({
-        title: "Wallet connected",
-        description: "Your wallet has been successfully connected.",
+      await kit.openModal({
+        onWalletSelected: async (option: any) => {
+          try {
+            kit.setWallet(option.id);
+            const { address } = await kit.getAddress();
+            setPublicKey(address);
+            setConnectedKey(address);
+          } catch (e) {
+            console.error(e);
+          }
+        },
       });
-    } catch (error) {
-      toast({
-        title: "Connection failed",
-        description: (error as Error).message,
-        variant: "destructive",
-      });
+    } catch (e) {
+      console.error(e);
     }
   };
 
-  const handleDisconnectWallet = () => {
-    disconnectWallet();
-    toast({
-      title: "Wallet disconnected",
-      description: "Your wallet has been disconnected.",
-    });
-  };
-
   return (
-    <div>
-      {isConnected ? (
-        <div className="flex items-center space-x-4">
-          <span className="text-sm text-gray-600">
-            {publicKey.slice(0, 6)}...{publicKey.slice(-4)}
-          </span>
-          <Button onClick={handleDisconnectWallet} variant="outline" size="sm">
-            Disconnect
-          </Button>
+    <div className="text-center">
+      {connectedKey ? (
+        <div className="truncate max-w-xs mx-auto">
+          Signed in as {connectedKey}
         </div>
       ) : (
-        <Button onClick={handleConnectWallet} size="sm">
-          Connect Wallet
-        </Button>
+        <button
+          onClick={handleConnect}
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        >
+          Connect
+        </button>
       )}
     </div>
   );
 };
 
-export default WalletConnect;
-
-function useWallet(): { isConnected: any; publicKey: any; connectWallet: any; disconnectWallet: any; } {
-  throw new Error('Function not implemented.');
-}
-
-
-function useToast(): { toast: any; } {
-  throw new Error('Function not implemented.');
-}
+export default ConnectWallet;

@@ -3,7 +3,9 @@
 import React from 'react';
 import Link from 'next/link';
 import HeroSection from '../components/HeroSection';
-import PropertyCard from '../components/Propertycard';
+// import PropertyCard from '../components/Propertycard';
+import ConnectWallet from '../components/WalletConnect';
+import Increment from '../components/Increment';
 import { fetchProperties  } from '@/services/propertyService';
 import { Property } from '@/types/index';
 export default async function Home() {
@@ -16,11 +18,11 @@ export default async function Home() {
       <section className="py-16 bg-gray-100">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold mb-8 text-center">Featured Properties</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {featuredProperties.map((property: Property) => (
               <PropertyCard key={property.id} property={property} />
             ))}
-          </div>
+          </div> */}
           <div className="text-center mt-12">
             <Link href="/properties" className="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition-colors">
               View All Properties
@@ -43,8 +45,10 @@ export default async function Home() {
             </div>
             <div className="text-center">
               <h3 className="text-xl font-semibold mb-4">3. Earn Returns</h3>
-              <p>Receive rental income and potential appreciation as the property value grows.</p>
+              <p>Receive rental income nd potential appreciation as the property value grows.</p>
             </div>
+            <ConnectWallet />
+            <Increment />
           </div>
         </div>
       </section>
