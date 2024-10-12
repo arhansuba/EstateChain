@@ -5,7 +5,7 @@ import { Home, DollarSign, Users } from "lucide-react";
 import { Progress } from '@radix-ui/react-progress';
 import { Button } from './ui/button';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from './ui/card';
-import React from 'react';
+import { usePropertyData } from '../hooks/usePropertyData'; // Import the custom hook
 
 interface Property {
   id: string;
@@ -15,10 +15,12 @@ interface Property {
 }
 
 interface PropertyCardProps {
-  property: Property;
+  propertyId: string; // Expect propertyId as a prop
 }
 
-const PropertyCard: React.FC<PropertyCardProps> = ({ property }) => {
+export const PropertyCard: React.FC<PropertyCardProps> = ({ propertyId }) => {
+  const { property, loading } = usePropertyData(propertyId); // Use property and loading state from the hook
+
   const [investedShares, setInvestedShares] = useState(3);
   const totalShares = 10;
   const sharePrice = 10000;
@@ -29,6 +31,10 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property }) => {
       setInvestedShares(investedShares + 1);
     }
   };
+
+  if (loading) return <div>Loading...</div>; // Handle loading state
+
+  if (!property) return <div>No property data found.</div>; // Handle case where no property is available
 
   return (
     <Card className="w-full max-w-md mx-auto">

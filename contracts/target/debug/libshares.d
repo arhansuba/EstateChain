@@ -1,1 +1,1 @@
-/home/arhan/stellar-real-estate-3/contracts/target/debug/libshares.so: /home/arhan/stellar-real-estate-3/contracts/shares/src/lib.rs
+/home/arhan/EstateChain/contracts/target/debug/libshares.so: /home/arhan/EstateChain/contracts/shares/src/lib.rs

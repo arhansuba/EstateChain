@@ -1,1 +1,1 @@
-/home/arhan/stellar-real-estate-3/contracts/target/debug/libescrow.so: /home/arhan/stellar-real-estate-3/contracts/escrow/src/lib.rs
+/home/arhan/EstateChain/contracts/target/debug/libescrow.so: /home/arhan/EstateChain/contracts/escrow/src/lib.rs

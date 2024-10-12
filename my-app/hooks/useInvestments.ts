@@ -1,25 +1,26 @@
-// hooks/useInvestments.ts
+import { useState } from 'react';
+//import { getMarketplaceContract } from '../lib/contracts/marketplaceClient';
+import { useWallet } from './useWallet';
+import { getMarketplaceContract } from '@/lib/contracts/marketplace/marketplaceClient';
 
-import { useState, useEffect } from 'react';
-import { Investment } from '@/types';
-import { fetchInvestments } from '@/services/stellarService';
+export const useInvestment = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const { publicKey, signTransaction } = useWallet();
 
-export function useInvestments(address: string | null) {
-  const [investments, setInvestments] = useState<Investment[]>([]);
-  const [totalInvested, setTotalInvested] = useState(0);
-  const [totalReturns, setTotalReturns] = useState(0);
+  const invest = async (propertyId: string, amount: string) => {
+    if (!publicKey) throw new Error('Wallet not connected');
 
-  useEffect(() => {
-    if (address) {
-      fetchInvestments(address).then((data: any[] | ((prevState: Investment[]) => Investment[])) => {
-        if (Array.isArray(data)) {
-          setInvestments(data);
-          setTotalInvested(data.reduce((sum: any, inv: { investedAmount: any; }) => sum + inv.investedAmount, 0));
-          setTotalReturns(data.reduce((sum: any, inv: { returns: any; }) => sum + inv.returns, 0));
-        }
-      });
+    setIsLoading(true);
+    try {
+      const contract = getMarketplaceContract();
+      const transaction = await contract.invest({ propertyId, amount });
+      const signedTransaction = await signTransaction(transaction);
+      const result = await contract.submitTransaction(signedTransaction);
+      return result;
+    } finally {
+      setIsLoading(false);
     }
-  }, [address]);
+  };
 
-  return { investments, totalInvested, totalReturns };
-}
+  return { invest, isLoading };
+};

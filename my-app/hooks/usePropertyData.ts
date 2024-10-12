@@ -1,30 +1,40 @@
 import { useState, useEffect } from 'react';
 import { fetchProperties } from '../services/propertyService';
 import { Property } from '@/types';
+import { getPropertyContract } from '@/lib/contracts/property/propertyClient';
+//import { getPropertyContract } from '../lib/contracts/property/propertyClient';
 
-
-export function usePropertyData() {
+export const usePropertyData = (propertyId: string | null = null) => {
+  const [property, setProperty] = useState<Property | null>(null);
   const [properties, setProperties] = useState<Property[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const loadProperties = async () => {
+    const fetchData = async () => {
+      setLoading(true);
       try {
-        setLoading(true);
-        const fetchedProperties = await fetchProperties();
-        setProperties(fetchedProperties);
+        if (propertyId) {
+          // Fetch single property data if propertyId is provided
+          const contract = getPropertyContract();
+          const result = await contract.getProperty({ id: propertyId });
+          setProperty(result);
+        } else {
+          // Fetch all properties if no propertyId is provided
+          const fetchedProperties = await fetchProperties();
+          setProperties(fetchedProperties);
+        }
         setError(null);
       } catch (err) {
-        setError('Failed to fetch properties');
-        console.error('Error fetching properties:', err);
+        setError(propertyId ? 'Failed to fetch property' : 'Failed to fetch properties');
+        console.error('Error fetching data:', err);
       } finally {
         setLoading(false);
       }
     };
 
-    loadProperties();
-  }, []);
+    fetchData();
+  }, [propertyId]);
 
   const refreshProperties = async () => {
     setLoading(true);
@@ -40,5 +50,5 @@ export function usePropertyData() {
     }
   };
 
-  return { properties, loading, error, refreshProperties };
-}
+  return { property, properties, loading, error, refreshProperties };
+};

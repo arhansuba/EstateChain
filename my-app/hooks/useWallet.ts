@@ -1,25 +1,19 @@
+// hooks/useWallet.ts
 "use client";
 import { useState, useEffect } from 'react';
-import { Keypair } from 'stellar-sdk';
-// hooks/useWalletHook.ts
-"use client";
+import { Keypair } from 'stellar-sdk'; // Assuming Stellar SDK is used
+type Wallet = {
+  publicKey: string;
+  secretKey: string;
+};
 
-import { useContext } from 'react';
-import { WalletContext } from '../context/WalletContext';
-
-export function useWalletHook() {
-  const context = useContext(WalletContext);
-  if (context === undefined) {
-    throw new Error('useWalletHook must be used within a WalletProvider');
-  }
-  return context;
-}
-export function useWallet() {
+export const useWallet = () => {
   const [publicKey, setPublicKey] = useState<string | null>(null);
   const [secretKey, setSecretKey] = useState<string | null>(null);
   const [isConnected, setIsConnected] = useState(false);
 
   useEffect(() => {
+    // Retrieve wallet info from localStorage on load
     const storedPublicKey = localStorage.getItem('stellarPublicKey');
     const storedSecretKey = localStorage.getItem('stellarSecretKey');
     if (storedPublicKey && storedSecretKey) {
@@ -51,11 +45,25 @@ export function useWallet() {
     localStorage.removeItem('stellarSecretKey');
   };
 
+  const signTransaction = async (transaction: any) => {
+    if (!publicKey || !secretKey) {
+      throw new Error('Wallet not connected');
+    }
+    // Use external wallet service for signing transaction
+    const wallet: Wallet = { publicKey, secretKey };
+    return await signTransactionWithWallet(wallet, transaction);
+  };
+
   return {
     publicKey,
     secretKey,
     isConnected,
     connect,
     disconnect,
+    signTransaction,
   };
+};
+function signTransactionWithWallet(wallet: Wallet, transaction: any) {
+  throw new Error('Function not implemented.');
 }
+

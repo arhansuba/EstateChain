@@ -21,6 +21,7 @@ export interface WalletContextType {
 }
 
 export interface Property {
+  [x: string]: ReactNode;
   id: string;
   name: string;
   location: string;

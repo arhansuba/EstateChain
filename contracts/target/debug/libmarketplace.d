@@ -1,1 +1,1 @@
-/home/arhan/stellar-real-estate-3/contracts/target/debug/libmarketplace.so: /home/arhan/stellar-real-estate-3/contracts/marketplace/src/lib.rs
+/home/arhan/EstateChain/contracts/target/debug/libmarketplace.so: /home/arhan/EstateChain/contracts/marketplace/src/lib.rs
