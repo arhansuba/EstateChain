@@ -3,26 +3,31 @@
 import React from 'react';
 import Link from 'next/link';
 import HeroSection from '../components/HeroSection';
-// import PropertyCard from '../components/Propertycard';
 import ConnectWallet from '../components/WalletConnect';
 import Increment from '../components/Increment';
-import { fetchProperties  } from '@/services/propertyService';
+import { fetchProperties } from '@/services/propertyService';
 import { Property } from '@/types/index';
+import { Button } from "@/components/ui/button";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
+import { ChevronRight, Facebook, Twitter, Instagram, Linkedin } from "lucide-react";
+import PropertyCard from '../components/Propertycard';
+
 export default async function Home() {
-  const featuredProperties = await fetchProperties();
+  const featuredProperties: Property[] = await fetchProperties();
 
   return (
     <div>
       <HeroSection />
-      
+
+      {/* Featured Properties Section */}
       <section className="py-16 bg-gray-100">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold mb-8 text-center">Featured Properties</h2>
-          {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {featuredProperties.map((property: Property) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {featuredProperties.map((property) => (
               <PropertyCard key={property.id} property={property} />
             ))}
-          </div> */}
+          </div>
           <div className="text-center mt-12">
             <Link href="/properties" className="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition-colors">
               View All Properties
@@ -30,7 +35,8 @@ export default async function Home() {
           </div>
         </div>
       </section>
-      
+
+      {/* How It Works Section */}
       <section className="py-16">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold mb-8 text-center">How It Works</h2>
@@ -45,13 +51,39 @@ export default async function Home() {
             </div>
             <div className="text-center">
               <h3 className="text-xl font-semibold mb-4">3. Earn Returns</h3>
-              <p>Receive rental income nd potential appreciation as the property value grows.</p>
+              <p>Receive rental income and potential appreciation as the property value grows.</p>
             </div>
-            <ConnectWallet />
-            <Increment />
           </div>
         </div>
       </section>
+
+      {/* Wallet Connection and Increment Section */}
+      <ConnectWallet />
+      <Increment />
+
+      {/* Footer */}
+      <footer className="bg-blue-900 text-white py-8">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div>
+              <h3 className="text-xl font-bold mb-4">EstateChain</h3>
+              <p className="text-sm">Revolutionizing real estate investment through blockchain technology.</p>
+            </div>
+            <div>
+              <h4 className="text-lg font-semibold mb-4">Connect With Us</h4>
+              <div className="flex space-x-4">
+                <a href="#" className="hover:text-gold-400 transition-colors"><Facebook /></a>
+                <a href="#" className="hover:text-gold-400 transition-colors"><Twitter /></a>
+                <a href="#" className="hover:text-gold-400 transition-colors"><Instagram /></a>
+                <a href="#" className="hover:text-gold-400 transition-colors"><Linkedin /></a>
+              </div>
+            </div>
+          </div>
+          <div className="mt-8 pt-8 border-t border-blue-800 text-center">
+            <p className="text-sm">&copy; 2023 Stellar Real Estate. All rights reserved.</p>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
