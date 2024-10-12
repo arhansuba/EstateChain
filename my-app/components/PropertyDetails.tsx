@@ -1,12 +1,5 @@
 import React from 'react';
 import { useProperty } from '../hooks/useProperty';
-
-interface Property {
-  name: string;
-  price: number;
-  owner: string;
-  buyer: string;
-}
 import { useMarketplace } from '../hooks/useMarketplace';
 import { useShares } from '../hooks/useShares';
 import { useEscrow } from '../hooks/useEscrow';
@@ -24,7 +17,7 @@ export const PropertyDetails: React.FC<PropertyDetailsProps> = ({ propertyId }) 
   const { increment, value, isLoading: incrementLoading } = useIncrement();
 
   if (propertyLoading) return <div>Loading property details...</div>;
-  if (!property) return <div>Property not found.</div>;
+  if (!property) return <div>Property not found.</div>; // Property is null or not loaded
 
   return (
     <div>
@@ -36,7 +29,7 @@ export const PropertyDetails: React.FC<PropertyDetailsProps> = ({ propertyId }) 
       <button onClick={() => buyShares(propertyId, '10')} disabled={sharesLoading}>
         {sharesLoading ? 'Buying Shares...' : 'Buy 10 Shares'}
       </button>
-      <button onClick={() => createEscrow(property.owner, property.buyer, property.price)} disabled={escrowLoading}>
+      <button onClick={() => createEscrow(property.owner, property.buyer, property.price.toString())} disabled={escrowLoading}>
         {escrowLoading ? 'Creating Escrow...' : 'Create Escrow'}
       </button>
       <div>

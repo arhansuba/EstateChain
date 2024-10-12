@@ -1,4 +1,11 @@
+import { ReactNode } from "react";
 
+export interface SharesContract {
+  buyShares(args: { propertyId: string; amount: string }): Promise<any>;
+  submitTransaction(transaction: any): Promise<any>;
+  getSharesBalance(args: { propertyId: string; address: string }): Promise<number>;
+  // Add other methods if necessary
+}
 
 
 export interface Investment {

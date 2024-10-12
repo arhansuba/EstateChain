@@ -17,7 +17,7 @@ export const usePropertyData = (propertyId: string | null = null) => {
         if (propertyId) {
           // Fetch single property data if propertyId is provided
           const contract = getPropertyContract();
-          const result = await contract.getProperty({ id: propertyId });
+          const result = await contract.getProperty(propertyId);
           setProperty(result);
         } else {
           // Fetch all properties if no propertyId is provided

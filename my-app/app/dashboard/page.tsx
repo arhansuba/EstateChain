@@ -1,19 +1,25 @@
-// app/dashboard/page.tsx
-
-import React from 'react';
-import { GetServerSideProps } from 'next';
+import { Suspense } from 'react';
 import WalletConnect from '@/components/WalletConnect';
-import { useWallet } from '@/context/WalletContext';
 import Dashboard from '@/components/dashboard';
+import { getPropertyContract } from '../../lib/contracts/property/propertyClient';
 
-
-interface DashboardPageProps {
-  // Add any server-side props here if needed
+// This is a Server Component
+export default async function DashboardPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <DashboardContent />
+    </Suspense>
+  );
 }
 
-export default function DashboardPage({}: DashboardPageProps) {
-  const { isConnected, address } = useWallet();
-  const { properties, investments, totalValue } = usePropertyData(address);
+// This is a Client Component
+'use client';
+
+import { useWallet } from '@/context/WalletContext';
+import { useState, useEffect } from 'react';
+
+function DashboardContent() {
+  const { isConnected, publicKey } = useWallet();
 
   if (!isConnected) {
     return (
@@ -27,22 +33,39 @@ export default function DashboardPage({}: DashboardPageProps) {
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold mb-6">Dashboard</h1>
-      <Dashboard
-        properties={properties}
-        investments={investments}
-        totalValue={totalValue}
-      />
+      <Suspense fallback={<div>Loading dashboard data...</div>}>
+        {publicKey && <DashboardData address={publicKey} />}
+      </Suspense>
     </div>
   );
 }
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  // Fetch any server-side data here if needed
-  return {
-    props: {}, // Will be passed to the page component as props
-  };
-};
+// This is a Client Component
+function DashboardData({ address }: { address: string }) {
+  const [properties, setProperties] = useState([]);
+  const [investments, setInvestments] = useState([]);
+  const [totalValue, setTotalValue] = useState(0);
 
-function usePropertyData(address: any): { properties: any; investments: any; totalValue: any; } {
-  throw new Error('Function not implemented.');
+  useEffect(() => {
+    async function fetchData() {
+      const contract = getPropertyContract();
+      const fetchedProperties = await contract.getProperties(address);
+      const fetchedInvestments = await contract.getInvestments(address);
+      const fetchedTotalValue = await contract.getTotalValue(address);
+
+      setProperties(fetchedProperties);
+      setInvestments(fetchedInvestments);
+      setTotalValue(fetchedTotalValue);
+    }
+
+    fetchData();
+  }, [address]);
+
+  return (
+    <Dashboard 
+      properties={properties}
+      investments={investments}
+      totalValue={totalValue}
+    />
+  );
 }
