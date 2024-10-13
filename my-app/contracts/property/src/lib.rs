@@ -38,7 +38,7 @@ impl PropertyContract {
     }
 
     pub fn get_property(env: Env, id: String) -> Result<Property, PropertyError> {
-        env.storage().persistent().get(&id).ok_or(PropertyError::PropertyNotFound)
+        env.storage().persistent().get(&id).ok_or(PropertyError::PropertyNotFound)  
     }
 
     pub fn list_property_for_sale(env: Env, id: String) -> Result<(), PropertyError> {
