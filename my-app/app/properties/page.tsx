@@ -1,21 +1,33 @@
 // app/properties/page.tsx
 
 import React from 'react';
-import { usePropertyData } from '@/hooks/usePropertyData';
+
 import { useWallet } from '@/hooks/useWallet';
 import PropertyCard from '../../components/Propertycard';
 import WalletConnect from '@/components/WalletConnect';
 import LoadingSpinner from '@/components/ui/LoadingSpinner';
 
+import { useState, useEffect } from 'react';
+
 export default function PropertiesPage() {
-  const { properties, loading, error, refreshProperties } = usePropertyData();
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [properties, setProperties] = useState<any[]>([]);
+
   const { isConnected } = useWallet();
+
+  useEffect(() => {
+    // Simulate fetching data
+    setTimeout(() => {
+      setLoading(false);
+      setProperties([{ id: 1, name: 'Property 1' }, { id: 2, name: 'Property 2' }]); // Example properties
+    }, 2000);
+  }, []);
 
   if (!isConnected) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen">
         <h1 className="text-2xl font-bold mb-4">Connect your wallet to view properties</h1>
-        <WalletConnect />
       </div>
     );
   }
@@ -29,6 +41,10 @@ export default function PropertiesPage() {
   }
 
   if (error) {
+    function refreshProperties(event: React.MouseEvent<HTMLButtonElement>): void {
+      throw new Error('Function not implemented.');
+    }
+
     return (
       <div className="text-center py-10">
         <p className="text-red-500 text-xl mb-4">{error}</p>

@@ -36,6 +36,7 @@ export interface Property {
   imageUrl: string;
   tokenSupply: number;
   availableTokens: number;
+  description: string;
 }
 
 export interface UserInvestment {

@@ -1,71 +1,38 @@
-import { Suspense } from 'react';
-import WalletConnect from '@/components/WalletConnect';
-import Dashboard from '@/components/dashboard';
-import { getPropertyContract } from '../../lib/contracts/property/propertyClient';
+// components/Dashboard.tsx
 
-// This is a Server Component
-export default async function DashboardPage() {
-  return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <DashboardContent />
-    </Suspense>
-  );
+import PropertyCard from '@/components/property-card';
+import React from 'react';
+
+
+interface DashboardProps {
+  properties: any[]; // Replace 'any' with your actual property type
+  investments: any[]; // Replace 'any' with your actual investment type
+  totalValue: number;
 }
 
-// This is a Client Component
-'use client';
-
-import { useWallet } from '@/context/WalletContext';
-import { useState, useEffect } from 'react';
-
-function DashboardContent() {
-  const { isConnected, publicKey } = useWallet();
-
-  if (!isConnected) {
-    return (
-      <div className="flex flex-col items-center justify-center min-h-screen">
-        <h1 className="text-2xl font-bold mb-4">Connect your wallet to view your dashboard</h1>
-        <WalletConnect />
-      </div>
-    );
-  }
-
+const Dashboard: React.FC<DashboardProps> = ({ properties, investments, totalValue }) => {
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-6">Dashboard</h1>
-      <Suspense fallback={<div>Loading dashboard data...</div>}>
-        {publicKey && <DashboardData address={publicKey} />}
-      </Suspense>
+    <div>
+      <div className="mb-8">
+        <h2 className="text-xl font-semibold mb-2">Total Portfolio Value</h2>
+        <p className="text-2xl font-bold">${totalValue.toLocaleString()}</p>
+      </div>
+      
+      <div className="mb-8">
+        <h2 className="text-xl font-semibold mb-4">Your Properties</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {properties.map((property) => (
+            <PropertyCard key={property.id} property={property} />
+          ))}
+        </div>
+      </div>
+      
+      <div>
+        <h2 className="text-xl font-semibold mb-4">Your Investments</h2>
+        {/* Implement investment list or cards here */}
+      </div>
     </div>
   );
-}
+};
 
-// This is a Client Component
-function DashboardData({ address }: { address: string }) {
-  const [properties, setProperties] = useState([]);
-  const [investments, setInvestments] = useState([]);
-  const [totalValue, setTotalValue] = useState(0);
-
-  useEffect(() => {
-    async function fetchData() {
-      const contract = getPropertyContract();
-      const fetchedProperties = await contract.getProperties(address);
-      const fetchedInvestments = await contract.getInvestments(address);
-      const fetchedTotalValue = await contract.getTotalValue(address);
-
-      setProperties(fetchedProperties);
-      setInvestments(fetchedInvestments);
-      setTotalValue(fetchedTotalValue);
-    }
-
-    fetchData();
-  }, [address]);
-
-  return (
-    <Dashboard 
-      properties={properties}
-      investments={investments}
-      totalValue={totalValue}
-    />
-  );
-}
+export default Dashboard;

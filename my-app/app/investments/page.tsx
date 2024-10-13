@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 import WalletConnect from '@/components/WalletConnect';
 import InvestmentCard from '@/components/InvestmentCard';
-import { getInvestments, getTotalInvested, getTotalReturns } from '@/lib/investmentData';
+
 
 import { Investment } from '@/types';
 
@@ -45,9 +45,10 @@ function InvestmentsContent() {
 
 // This is a Server Component
 async function InvestmentsData({ address }: { address: string }) {
-  const investments = await getInvestments(address);
-  const totalInvested = await getTotalInvested(address);
-  const totalReturns = await getTotalReturns(address);
+  // Mock data for total invested and total returns
+  const totalInvested = 10000; // Replace with actual data fetching logic
+  const totalReturns = 2000; // Replace with actual data fetching logic
+  const investments: Investment[] = []; // Replace with actual data fetching logic
 
   return (
     <>

@@ -2,19 +2,34 @@
 
 import React from 'react';
 import Link from 'next/link';
-import HeroSection from '../components/HeroSection';
-import ConnectWallet from '../components/WalletConnect';
-import Increment from '../components/Increment';
+import HeroSection from '@/components/HeroSection';
+import ConnectWallet from '@/components/WalletConnect';
+import Increment from '@/components/Increment';
+import PropertyCard from '@/components/Propertycard';
 import { fetchProperties } from '@/services/propertyService';
-import { Property } from '@/types/index';
-import { Button } from "@/components/ui/button";
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
-import { ChevronRight, Facebook, Twitter, Instagram, Linkedin } from "lucide-react";
-import PropertyCard from '../components/Propertycard';
+
+import { Facebook, Twitter, Instagram, Linkedin } from "lucide-react";
+
+
+
+export interface Property {
+  id: string;
+  name: string;
+  location: string;
+  price: number;
+  imageUrl: string;
+  tokenSupply: number;
+  availableTokens: number;
+  description?: string;
+}
 
 export default async function Home() {
-  const featuredProperties: Property[] = await fetchProperties();
-
+  // Fetching featured properties
+  const fetchedProperties: Property[] = await fetchProperties();
+  const featuredProperties = fetchedProperties.map(property => ({
+    ...property,
+    description: property.description || 'No description available', // Add a default description if it's missing
+  }));
   return (
     <div>
       <HeroSection />
@@ -23,11 +38,11 @@ export default async function Home() {
       <section className="py-16 bg-gray-100">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold mb-8 text-center">Featured Properties</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {featuredProperties.map((property) => (
-              <PropertyCard key={property.id} property={property} />
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {featuredProperties.map(({ id, ...property }) => (
+              <PropertyCard key={id} property={{ id, ...property }} />
             ))}
-          </div>
+            </div>
           <div className="text-center mt-12">
             <Link href="/properties" className="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition-colors">
               View All Properties

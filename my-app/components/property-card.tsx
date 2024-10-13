@@ -1,37 +1,49 @@
-'use client'
+'use client';
 
-import { useState } from 'react'
+import { useState } from 'react';
+import { Home, DollarSign, Users } from "lucide-react";
+import { Progress } from '@radix-ui/react-progress';
+import { Button } from './ui/button';
+import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from './ui/card';
+import React from 'react';
 
-import { Home, DollarSign, Users } from "lucide-react"
-import { Progress } from '@radix-ui/react-progress'
-import { Button } from './ui/button'
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from './ui/card'
+interface Property {
+  name: string;
+  description: string;
+  location: string;
+  totalShares: number;
+  sharePrice: number;
+}
 
-export function PropertyCard() {
-  const [investedShares, setInvestedShares] = useState(3)
-  const totalShares = 10
-  const sharePrice = 10000
-  const totalPrice = sharePrice * totalShares
+interface PropertyCardProps {
+  property: Property;
+}
+
+const PropertyCard: React.FC<PropertyCardProps> = ({ property }) => {
+  const [investedShares, setInvestedShares] = useState(3);
+  const totalShares = property.totalShares;
+  const sharePrice = property.sharePrice;
+  const totalPrice = sharePrice * totalShares;
 
   const handleInvest = () => {
     if (investedShares < totalShares) {
-      setInvestedShares(investedShares + 1)
+      setInvestedShares(investedShares + 1);
     }
-  }
+  };
 
   return (
     <Card className="w-full max-w-md mx-auto">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Home className="h-6 w-6" />
-          Luxury Beachfront Villa
+          {property.name}
         </CardTitle>
-        <CardDescription>Malibu, California</CardDescription>
+        <CardDescription>{property.location}</CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         <img
           src="/placeholder.svg?height=200&width=400"
-          alt="Luxury Beachfront Villa"
+          alt={property.name}
           className="w-full h-48 object-cover rounded-md"
         />
         <div className="flex justify-between items-center">
@@ -70,5 +82,7 @@ export function PropertyCard() {
         </Button>
       </CardFooter>
     </Card>
-  )
+  );
 }
+
+export default PropertyCard;
