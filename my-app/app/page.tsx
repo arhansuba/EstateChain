@@ -1,15 +1,10 @@
-// app/page.tsx
-
 import React from 'react';
 import Link from 'next/link';
 import HeroSection from '../components/HeroSection';
-import ConnectWallet from '../components/WalletConnect';
-import Increment from '../components/Increment';
 import { fetchProperties } from '@/services/propertyService';
 import { Property } from '@/types/index';
-import { Button } from "@/components/ui/button";
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
-import { ChevronRight, Facebook, Twitter, Instagram, Linkedin } from "lucide-react";
+import { Facebook, Twitter, Instagram, Linkedin } from "lucide-react";
+import PropertyCard from '../components/Propertycard';
 
 export default async function Home() {
   const featuredProperties: Property[] = await fetchProperties();
@@ -18,11 +13,14 @@ export default async function Home() {
     <div>
       <HeroSection />
 
-      {/* Featured Properties Section */}
       <section className="py-16 bg-gray-100">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold mb-8 text-center">Featured Properties</h2>
-          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {featuredProperties.map((property: Property) => (
+              <PropertyCard key={property.id} property={property} />
+            ))}
+          </div>
           <div className="text-center mt-12">
             <Link href="/properties" className="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition-colors">
               View All Properties
@@ -51,10 +49,6 @@ export default async function Home() {
           </div>
         </div>
       </section>
-
-      {/* Wallet Connection and Increment Section */}
-      <ConnectWallet />
-      <Increment />
 
       {/* Footer */}
       <footer className="bg-blue-900 text-white py-8">

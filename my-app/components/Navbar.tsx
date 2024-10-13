@@ -3,7 +3,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-
+import ConnectWallet from '../components/WalletConnect';
 const Navbar: React.FC = () => {
 
 
@@ -27,6 +27,7 @@ const Navbar: React.FC = () => {
           <Link href="/dashboard" className="text-gray-300 hover:text-white">
             Dashboard
           </Link>
+          <ConnectWallet />
         </div>
 
         

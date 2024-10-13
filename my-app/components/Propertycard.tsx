@@ -10,13 +10,12 @@ import React from 'react';
 interface Property {
   id: string;
   name: string;
-  description?: string;
+  description: string;
   price: string;
 }
 
 interface PropertyCardProps {
   property: Property;
-  description?: string;
 }
 
 const PropertyCard: React.FC<PropertyCardProps> = ({ property }) => {
@@ -42,9 +41,7 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property }) => {
       </CardHeader>
       <CardContent className="space-y-4">
         <img
-          src="my-app/assets/27afb10aee2d505315c3915aad863aa7.jpg" 
-          height="200"
-          width="400"
+          src="/placeholder.svg?height=200&width=400"
           alt={property.name}
           className="w-full h-48 object-cover rounded-md"
         />
