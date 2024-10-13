@@ -74,7 +74,6 @@ https://github.com/user-attachments/assets/87b91ace-0b9d-4a94-acd7-f04baf308a49
 
 
 
-## Project Walkthrough
 
 
 ## Setup and Installation
