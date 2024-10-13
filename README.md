@@ -67,8 +67,6 @@ https://github.com/user-attachments/assets/87b91ace-0b9d-4a94-acd7-f04baf308a49
 ![Ekran görüntüsü 2024-10-13 050003](https://github.com/user-attachments/assets/c3f35001-10d2-4f4e-9a0e-c072ea78de2b)
 ![Ekran görüntüsü 2024-10-13 045936](https://github.com/user-attachments/assets/7f351b54-f9d4-429c-b1d1-1cf473f3f2bd)
 ![Ekran görüntüsü 2024-10-13 045918](https://github.com/user-attachments/assets/f245b94f-942b-49da-939d-f15072269008)
-![Ekran görüntüsü 2024-10-13 045738](https://g![Ekran görüntüsü 2024-10-13 045721](https://github.com/user-attachments/assets/f1519641-d5d3-4ca7-baa8-b7fa81434b80)
-ithub.com/user-attachments/assets/ff6cb394-a9ac-4ef9-85bb-c64fac0ab36d)
 ![Ekran görüntüsü 2024-10-13 045721](https://github.com/user-attachments/assets/b145e79e-ad61-439f-934d-b9ea84de8f0e)
 ![Ekran görüntüsü 2024-10-13 045900](https://github.com/user-attachments/assets/0f8c08ce-18bf-4888-a1d8-9a4828937c26)
 ![Ekran görüntüsü 2024-10-13 045753](https://github.com/user-attachments/assets/5cc51d97-2cd3-458d-84f4-262bd381b40b)
@@ -86,7 +84,7 @@ To get EstateChain running locally:
 1. Clone the repository:
 git clone https://github.com/arhansuba/EstateChain.git
 
-https://github.com/user-attachments/assets/87b91ace-0b9d-4a94-acd7-f04baf308a49
+
 
 
 cd EstateChain
