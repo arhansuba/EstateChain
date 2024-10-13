@@ -57,6 +57,25 @@ Our smart contract, built on Soroban (Stellar's smart contract platform), is the
 
 The frontend seamlessly integrates with these functions via the Stellar SDK, providing a smooth user experience from wallet connection to investment management.
 
+## Deployed Contracts
+
+### Escrow Contract
+- **Contract Address**: `CCDJXQS3DFU2VBFAXMXILXFEQZL5NMHPW3N34F2KAGZQBKBKYLPKTLTF`
+- **Explorer Link**: [View on Stellar Expert](https://stellar.expert/explorer/testnet/contract/CCDJXQS3DFU2VBFAXMXILXFEQZL5NMHPW3N34F2KAGZQBKBKYLPKTLTF)
+
+### Marketplace Contract
+- **Contract Address**: `CBW3HAGIKRUFGINW5JCAGFL53VKMDACLEZNGX7CRM4U7TPHFV5TV4FKY`
+- **Explorer Link**: [View on Stellar Expert](https://stellar.expert/explorer/testnet/contract/CBW3HAGIKRUFGINW5JCAGFL53VKMDACLEZNGX7CRM4U7TPHFV5TV4FKY)
+
+### Property Contract
+- **Contract Address**: `CAEL22JRFVKB3KKQS3DCO2QMLRLXPZNIWZO2ML2V6YJSQWIV77BDF4G3`
+- **Explorer Link**: [View on Stellar Expert](https://stellar.expert/explorer/testnet/contract/CAEL22JRFVKB3KKQS3DCO2QMLRLXPZNIWZO2ML2V6YJSQWIV77BDF4G3)
+
+### Shares Contract
+- **Contract Address**: `CA2NYIP3WXHW3UGDQMLXEMMJAO7GXDLFGOWICLLU6DOGU64NFBF7FEHX`
+- **Explorer Link**: [View on Stellar Expert](https://stellar.expert/explorer/testnet/contract/CA2NYIP3WXHW3UGDQMLXEMMJAO7GXDLFGOWICLLU6DOGU64NFBF7FEHX)
+
+
 ## Demo
 
 https://github.com/user-attachments/assets/87b91ace-0b9d-4a94-acd7-f04baf308a49
