@@ -1,3 +1,5 @@
+'use client';
+
 import { Suspense } from 'react';
 import WalletConnect from '@/components/WalletConnect';
 import InvestmentCard from '@/components/InvestmentCard';
@@ -15,7 +17,6 @@ export default async function InvestmentsPage() {
 }
 
 // This is a Client Component
-'use client';
 
 import { useWallet } from '@/hooks/useWallet';
 
